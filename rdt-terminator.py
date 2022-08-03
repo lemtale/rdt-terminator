@@ -13,13 +13,25 @@ def get_reddit_client():
         client_secret=client_secret,
         username=username,
         password=password,
-        user_agent="RDT Terminator Script"
+        user_agent='RDT Terminator Script'
     )
+
+def list_comments(reddit, user):
+    for comment in reddit.redditor(user).comments.top():
+        print(comment.body)
+
+def delete_comments(reddit, user):
+    for comment in reddit.redditor(user).comments.top():
+        comment.delete()
+
+def delete_submissions(reddit, user):
+    for submission in reddit.redditor(user).submissions.top():
+        submission.delete()
+
 
 def app():
     reddit = get_reddit_client()
-    for submission in reddit.subreddit("all").hot(limit=25):
-        print(submission.title)
+    delete_submissions(reddit, 'lemtale')
 
 
 if __name__ == '__main__':
